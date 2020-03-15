@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import utopia.android.patch.util.MissingAPI;
+import utopia.android.patch.util.SupplyAPI;
 
 public abstract class FormatMap implements Format {
     @Override
@@ -68,7 +68,7 @@ public abstract class FormatMap implements Format {
      */
     public String nameOf(Object object) {
         if (object != null) {
-            return MissingAPI.getSimpleName(object.getClass());
+            return SupplyAPI.getSimpleName(object.getClass());
         }
         return null;
     }
@@ -122,7 +122,7 @@ public abstract class FormatMap implements Format {
                     || object instanceof SparseLongArray
                     || object instanceof SparseArray
             ) {
-                object = MissingAPI.sparseToMap(object); //Convert to map
+                object = SupplyAPI.sparseToMap(object); //Convert to map
             }
             if (object instanceof Map) {
                 List<Object> array = new LinkedList<>();
@@ -139,7 +139,7 @@ public abstract class FormatMap implements Format {
 
     static boolean isFinalMap(Object object) {
         if (object instanceof Map) {
-            if (!MissingAPI.isSystemClass(object.getClass())) {
+            if (!SupplyAPI.isSystemClass(object.getClass())) {
                 return false;
             }
         }

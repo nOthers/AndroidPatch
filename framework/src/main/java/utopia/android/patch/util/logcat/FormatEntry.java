@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
-import utopia.android.patch.util.MissingAPI;
+import utopia.android.patch.util.SupplyAPI;
 
 public final class FormatEntry extends FormatObject {
     private final ThreadLocal<Stack<Object>> mIgnores; //cycle ignore
@@ -71,7 +71,7 @@ public final class FormatEntry extends FormatObject {
             mIgnores.set(ignore);
         }
         if (ignore.lastIndexOf(object) >= 0) {
-            return (object != null ? MissingAPI.getSimpleName(object.getClass()) : null) + ".this";
+            return (object != null ? SupplyAPI.getSimpleName(object.getClass()) : null) + ".this";
         }
         Format[] formatArray = mFormatArray;
         for (Format format : formatArray) {

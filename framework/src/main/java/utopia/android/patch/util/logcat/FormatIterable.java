@@ -5,7 +5,7 @@ import android.util.Pair;
 import java.util.LinkedList;
 import java.util.List;
 
-import utopia.android.patch.util.MissingAPI;
+import utopia.android.patch.util.SupplyAPI;
 
 public abstract class FormatIterable implements Format {
     @Override
@@ -59,9 +59,9 @@ public abstract class FormatIterable implements Format {
             Class<?> objectClass = object.getClass();
             Class<?> componentType = objectClass.getComponentType();
             if (componentType != null) {
-                return MissingAPI.getSimpleName(componentType);
+                return SupplyAPI.getSimpleName(componentType);
             }
-            return MissingAPI.getSimpleName(objectClass);
+            return SupplyAPI.getSimpleName(objectClass);
         }
         return null;
     }
@@ -131,7 +131,7 @@ public abstract class FormatIterable implements Format {
                     || "[D".equals(className)
                     || "[C".equals(className)
             ) {
-                return MissingAPI.basicToArray(object);
+                return SupplyAPI.basicToArray(object);
             }
             if (object instanceof Object[]) {
                 return (Object[]) object;
@@ -153,7 +153,7 @@ public abstract class FormatIterable implements Format {
 
     static boolean isFinalIterable(Object object) {
         if (object instanceof Iterable) {
-            if (!MissingAPI.isSystemClass(object.getClass())) {
+            if (!SupplyAPI.isSystemClass(object.getClass())) {
                 return false;
             }
         }

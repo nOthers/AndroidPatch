@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import utopia.android.patch.util.MissingAPI;
+import utopia.android.patch.util.SupplyAPI;
 import utopia.android.patch.util.logcat.Format;
 import utopia.android.patch.util.logcat.FormatMap;
 import utopia.android.patch.util.logcat.Logcat;
@@ -298,7 +298,7 @@ public final class Rose extends Logcat {
                 if (packageName == null) {
                     return true;
                 }
-                for (Class<?> clazz : MissingAPI.getInheritClasses(object != null ? object.getClass() : null)) {
+                for (Class<?> clazz : SupplyAPI.getInheritClasses(object != null ? object.getClass() : null)) {
                     if (clazz.getName().startsWith(packageName)) {
                         return true;
                     }
