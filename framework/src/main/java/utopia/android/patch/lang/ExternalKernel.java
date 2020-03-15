@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Member;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -80,15 +81,16 @@ public abstract class ExternalKernel {
             classNames.add("patch.Loader");
         }
         for (String className : classNames) {
-            PatchLoader patchLoader;
             try {
-                patchLoader = (PatchLoader) classLoader.loadClass(className).newInstance();
-            } catch (Throwable t) {
-                wtf(t);
-                continue;
-            }
-            synchronized (mPatchLoaders) {
-                mPatchLoaders.add(patchLoader);
+                PatchLoader patchLoader = (PatchLoader) classLoader.loadClass(className).getConstructor().newInstance();
+                synchronized (mPatchLoaders) {
+                    mPatchLoaders.add(patchLoader);
+                }
+            } catch (InvocationTargetException e) {
+                wtf(e.getCause());
+            } catch (ExceptionInInitializerError e) {
+                wtf(e.getCause());
+            } catch (Throwable ignore) {
             }
         }
     }
