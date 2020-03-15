@@ -76,8 +76,7 @@ public abstract class ExternalKernel {
                 } catch (IOException ignore) {
                 }
             }
-        }
-        if (classNames.isEmpty()) {
+        } else {
             classNames.add("patch.Loader");
         }
         for (String className : classNames) {
@@ -181,6 +180,7 @@ public abstract class ExternalKernel {
 
 class CopyOnWriteSortedSet<E> {
     private static final Object[] EMPTY_ARRAY = new Object[0];
+
     private volatile Object[] elements = EMPTY_ARRAY;
 
     public synchronized boolean add(E e) {
