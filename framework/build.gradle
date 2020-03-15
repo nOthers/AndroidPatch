@@ -1,0 +1,24 @@
+apply plugin: 'java-library'
+
+dependencies {
+    compileOnly project(':android')
+}
+
+sourceCompatibility = "7"
+targetCompatibility = "7"
+
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+project.group = 'utopia.android.patch'
+project.archivesBaseName = 'framework'
+project.version = '1.0.0'
+
+uploadArchives {
+    repositories {
+        def mavenLocalUrl = mavenLocal().getUrl()
+        mavenDeployer {
+            repository(url: mavenLocalUrl)
+        }
+    }
+}

@@ -1,0 +1,29 @@
+import java.util.regex.Pattern
+
+def getTargetApp() {
+    def result = []
+    project.file('src/main/java/patch/Loader.java').eachLine { line ->
+        def re = Pattern.compile('super\\("(.+?)"\\)').matcher(line)
+        if (re.find()) {
+            result.add(re.group(1))
+        }
+    }
+    return result[0]
+}
+
+task debugPlugin
+debugPlugin.dependsOn(String.format(':%s:installDebug', project.name))
+debugPlugin.doLast {
+    def targetApp = getTargetApp()
+    if (targetApp == null) {
+        throw new RuntimeException('Unable to find target app')
+    }
+    exec {
+        executable = 'adb'
+        args = ['shell', 'am', 'force-stop', targetApp]
+    }
+    exec {
+        executable = 'adb'
+        args = ['shell', 'monkey', '-p', targetApp, '-c', 'android.intent.category.LAUNCHER', '1']
+    }
+}
