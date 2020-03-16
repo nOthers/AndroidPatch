@@ -19,7 +19,7 @@ public final class HiddenAPI {
     public static String currentPackageName() {
         String packageName = ActivityThread.currentPackageName();
         if (packageName == null) {
-            packageName = "system_process";
+            packageName = "system_server";
         }
         return packageName;
     }
@@ -32,7 +32,7 @@ public final class HiddenAPI {
     public static String currentProcessName() {
         String processName = ActivityThread.currentProcessName();
         if (processName == null) {
-            processName = "system_process";
+            processName = "system_server";
         }
         return processName;
     }

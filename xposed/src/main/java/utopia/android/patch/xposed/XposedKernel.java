@@ -126,7 +126,7 @@ public class XposedKernel extends ExternalKernel implements IXposedHookLoadPacka
         static final String sPackageName;
 
         static {
-            Matcher matcher = Pattern.compile("([\\w.]+)-(\\d+)/base\\.apk").matcher(sClassLoader.toString());
+            Matcher matcher = Pattern.compile("([\\w.]+)-\\d+/base\\.apk").matcher(sClassLoader.toString());
             if (matcher.find()) {
                 sPackageName = matcher.group(1);
             } else {
@@ -148,10 +148,11 @@ public class XposedKernel extends ExternalKernel implements IXposedHookLoadPacka
                 return false;
             }
             PackageInfo packageInfo = HiddenAPI.getPackageInfo(sPackageName);
-            if (packageInfo != null) {
-                IXposedHookLoadPackage xposedInit = (IXposedHookLoadPackage) new Debugger(packageInfo).loadClass("utopia.android.patch.xposed.XposedKernel").newInstance();
-                xposedInit.handleLoadPackage(lpparam);
+            if (packageInfo == null) { //Like the system_server
+                return false;
             }
+            IXposedHookLoadPackage xposedInit = (IXposedHookLoadPackage) new Debugger(packageInfo).loadClass("utopia.android.patch.xposed.XposedKernel").newInstance();
+            xposedInit.handleLoadPackage(lpparam);
             return true;
         }
 
