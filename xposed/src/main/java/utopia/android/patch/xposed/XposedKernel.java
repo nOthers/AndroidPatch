@@ -30,7 +30,7 @@ import utopia.android.patch.util.HiddenAPI;
 
 public class XposedKernel extends ExternalKernel implements IXposedHookLoadPackage {
     public XposedKernel() {
-        super("Xposed");
+        super("Xposed", XposedBridge.getXposedVersion());
         initPatchLoader(XposedKernel.class.getClassLoader());
     }
 

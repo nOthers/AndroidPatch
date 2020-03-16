@@ -19,24 +19,25 @@ public final class Patchwork {
         externalKernel = kernel;
     }
 
+    static volatile long count = 0;
+    static final Map<Long, Object[]> pairs = new HashMap<>();
+
     /**
-     * Get the provider name.
+     * Get property about the kernel, such as name or version.
      *
-     * @return provider name
+     * @param key key
+     * @return value
      * @throws PatchError if not support
      */
-    public static String provider() throws PatchError {
+    public static String property(String key) throws PatchError {
         try {
-            return externalKernel.getName();
+            return externalKernel.getProperty(key);
         } catch (PatchError e) {
             throw e;
         } catch (Throwable t) {
             throw new PatchError(t);
         }
     }
-
-    static volatile long count = 0;
-    static final Map<Long, Object[]> pairs = new HashMap<>();
 
     /**
      * Patch a constructor or a method.

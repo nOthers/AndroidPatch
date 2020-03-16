@@ -39,19 +39,24 @@ public abstract class ExternalKernel {
         }
     }
 
-    private final String mName;
+    private final Map<String, String> mProperties;
     private final List<PatchLoader> mPatchLoaders;
     private final Map<Member, MemberStruct> mMemberMapping;
 
-    protected ExternalKernel(String name) {
-        mName = name;
+    protected ExternalKernel(String name, int version, Object... properties) {
+        mProperties = new HashMap<>();
+        mProperties.put("name", name);
+        mProperties.put("version", String.valueOf(version));
+        for (int i = 0; properties != null && i < properties.length / 2; i++) {
+            mProperties.put(String.valueOf(properties[2 * i]), String.valueOf(properties[2 * i + 1]));
+        }
         mPatchLoaders = new LinkedList<>();
         mMemberMapping = new HashMap<>();
         Patchwork.provide(this);
     }
 
-    String getName() {
-        return mName;
+    String getProperty(String key) {
+        return mProperties.get(key);
     }
 
     protected void initPatchLoader(ClassLoader classLoader) {
@@ -180,7 +185,6 @@ public abstract class ExternalKernel {
 
 class CopyOnWriteSortedSet<E> {
     private static final Object[] EMPTY_ARRAY = new Object[0];
-
     private volatile Object[] elements = EMPTY_ARRAY;
 
     public synchronized boolean add(E e) {
