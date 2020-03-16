@@ -27,7 +27,15 @@ android {
 
 dependencies {
     compileOnly project(':framework')
-    runtimeOnly project(':xposed')
 }
 
-apply from: project(':xposed').file('xposed.gradle')
+switch (externalKernel) {
+    case 'xposed':
+        dependencies {
+            runtimeOnly project(':xposed')
+        }
+        apply from: project(':xposed').file('xposed.gradle')
+        break
+    default:
+        throw new RuntimeException('Illegal property: externalKernel=' + externalKernel)
+}
