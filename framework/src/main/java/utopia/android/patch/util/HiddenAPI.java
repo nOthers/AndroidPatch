@@ -18,10 +18,10 @@ public final class HiddenAPI {
      */
     public static String currentPackageName() {
         String packageName = ActivityThread.currentPackageName();
-        if (packageName == null) {
-            packageName = "android";
+        if (packageName != null) {
+            return packageName;
         }
-        return packageName;
+        return "android";
     }
 
     /**
@@ -31,10 +31,10 @@ public final class HiddenAPI {
      */
     public static String currentProcessName() {
         String processName = ActivityThread.currentProcessName();
-        if (processName == null) {
-            processName = "android";
+        if (processName != null) {
+            return processName;
         }
-        return processName;
+        return "android";
     }
 
     /**
@@ -53,7 +53,7 @@ public final class HiddenAPI {
                 }
             }
         }
-        return null;
+        return ClassLoader.getSystemClassLoader();
     }
 
     /**
