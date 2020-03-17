@@ -12,6 +12,7 @@ def getTargetApp() {
 }
 
 task debugPlugin
+debugPlugin.group = 'plugin'
 debugPlugin.dependsOn(String.format(':%s:installDebug', project.name))
 debugPlugin.doLast {
     def targetApp = getTargetApp()
