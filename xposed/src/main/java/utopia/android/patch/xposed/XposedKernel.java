@@ -126,7 +126,7 @@ public class XposedKernel extends ExternalKernel implements IXposedHookLoadPacka
         static final String sPackageName;
 
         static {
-            Matcher matcher = Pattern.compile("([\\w.]+)-\\d+/base\\.apk").matcher(sClassLoader.toString());
+            Matcher matcher = Pattern.compile("([\\w.]+)-.+/base\\.apk").matcher(sClassLoader.toString());
             if (matcher.find()) {
                 sPackageName = matcher.group(1);
             } else {
