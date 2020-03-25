@@ -1,7 +1,8 @@
 package utopia.android.patch.util.reflect;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.UndeclaredThrowableException;
 
 public class MethodWrapper extends Wrapper<Method> {
     public MethodWrapper(Method method) {
@@ -9,7 +10,7 @@ public class MethodWrapper extends Wrapper<Method> {
     }
 
     /**
-     * Call method and ignore checked exception.
+     * Call method and transform checked exception.
      *
      * @param obj  this object
      * @param args method parameter
@@ -22,7 +23,7 @@ public class MethodWrapper extends Wrapper<Method> {
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
-            throw new WrappingError(e); //Ignore checked exception
+            throw new UndeclaredThrowableException(e); //Transform checked exception
         }
     }
 

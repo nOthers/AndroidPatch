@@ -2,6 +2,7 @@ package utopia.android.patch.util.reflect;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.UndeclaredThrowableException;
 
 public class ConstructorWrapper extends Wrapper<Constructor<?>> {
     public ConstructorWrapper(Constructor<?> constructor) {
@@ -9,7 +10,7 @@ public class ConstructorWrapper extends Wrapper<Constructor<?>> {
     }
 
     /**
-     * Call constructor and ignore checked exception.
+     * Call constructor and transform checked exception.
      *
      * @param initargs constructor parameter
      * @param <T>      any type
@@ -21,7 +22,7 @@ public class ConstructorWrapper extends Wrapper<Constructor<?>> {
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
-            throw new WrappingError(e); //Ignore checked exception
+            throw new UndeclaredThrowableException(e); //Transform checked exception
         }
     }
 
