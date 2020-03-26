@@ -3,9 +3,12 @@ package utopia.android.patch.util;
 import android.app.ActivityThread;
 import android.app.Application;
 import android.app.LoadedApk;
+import android.content.Context;
 import android.content.pm.IPackageManager;
 import android.content.pm.PackageInfo;
 import android.os.UserHandle;
+
+import java.lang.reflect.Field;
 
 public final class HiddenAPI {
     private HiddenAPI() {
@@ -50,6 +53,17 @@ public final class HiddenAPI {
                 LoadedApk loadedApk = activityThread.peekPackageInfo(packageName, true);
                 if (loadedApk != null) {
                     return loadedApk.getClassLoader();
+                }
+            } else {
+                Context mSystemContext = null;
+                try {
+                    Field field = ActivityThread.class.getDeclaredField("mSystemContext");
+                    field.setAccessible(true);
+                    mSystemContext = (Context) field.get(activityThread);
+                } catch (ReflectiveOperationException ignore) {
+                }
+                if (mSystemContext != null) {
+                    return mSystemContext.getClassLoader();
                 }
             }
         }
