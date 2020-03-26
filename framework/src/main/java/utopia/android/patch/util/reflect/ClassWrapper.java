@@ -161,7 +161,7 @@ public class ClassWrapper extends Wrapper<Class<?>> implements Iterable<ClassWra
             }
             return new ConstructorWrapper(constructor);
         }
-        throw new WrappingError("no such constructor");
+        throw new WrappingError(String.format("no such constructor: %s.%s(%s)", wrapped.getName(), "<init>", joinTypes(parameterTypes)));
     }
 
     /**
@@ -191,7 +191,7 @@ public class ClassWrapper extends Wrapper<Class<?>> implements Iterable<ClassWra
             }
             return new FieldWrapper(field);
         }
-        throw new WrappingError("no such field");
+        throw new WrappingError(String.format("no such field: %s.%s", wrapped.getName(), fieldName));
     }
 
     /**
@@ -239,7 +239,7 @@ public class ClassWrapper extends Wrapper<Class<?>> implements Iterable<ClassWra
             }
             return new MethodWrapper(method);
         }
-        throw new WrappingError("no such method");
+        throw new WrappingError(String.format("no such method: %s.%s(%s)", wrapped.getName(), methodName, joinTypes(parameterTypes)));
     }
 
     private static boolean equalsType(Class<?> type, Object condition) {
@@ -253,5 +253,25 @@ public class ClassWrapper extends Wrapper<Class<?>> implements Iterable<ClassWra
             return type == condition;
         }
         throw new WrappingError("illegal condition type");
+    }
+
+    private static String joinTypes(Object... parameterTypes) {
+        StringBuilder sBuilder = new StringBuilder();
+        if (parameterTypes != null) {
+            for (int i = 0; i < parameterTypes.length; i++) {
+                if (i != 0) {
+                    sBuilder.append(", ");
+                }
+                Object parameterType = parameterTypes[i];
+                if (parameterType == null) {
+                    sBuilder.append("*");
+                } else if (parameterType instanceof String) {
+                    sBuilder.append(parameterType);
+                } else if (parameterType instanceof Class) {
+                    sBuilder.append(((Class) parameterType).getName());
+                }
+            }
+        }
+        return sBuilder.toString();
     }
 }
