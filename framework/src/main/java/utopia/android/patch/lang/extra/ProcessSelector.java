@@ -1,6 +1,7 @@
-package utopia.android.patch.util;
+package utopia.android.patch.lang.extra;
 
 import utopia.android.patch.lang.PatchLoader;
+import utopia.android.patch.util.HiddenAPI;
 
 public abstract class ProcessSelector implements PatchLoader {
     protected final String mPackageName; //target app

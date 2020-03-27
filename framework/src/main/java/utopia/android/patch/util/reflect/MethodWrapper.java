@@ -1,7 +1,7 @@
 package utopia.android.patch.util.reflect;
 
-import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.UndeclaredThrowableException;
 
 public class MethodWrapper extends Wrapper<Method> {

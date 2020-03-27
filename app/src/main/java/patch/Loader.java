@@ -1,6 +1,6 @@
 package patch;
 
-import utopia.android.patch.util.ProcessSelector;
+import utopia.android.patch.lang.extra.ProcessSelector;
 
 public class Loader extends ProcessSelector {
     public Loader() {
