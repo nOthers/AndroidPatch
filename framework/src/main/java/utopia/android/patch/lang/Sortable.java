@@ -22,7 +22,18 @@ public class Sortable implements Comparable<Sortable> {
         if (other.priority != priority) {
             return other.priority > priority ? 1 : -1;
         } else {
-            return System.identityHashCode(other) > System.identityHashCode(this) ? 1 : -1;
+            int hash1, hash2;
+            hash1 = System.identityHashCode(getClass().getClassLoader());
+            hash2 = System.identityHashCode(other.getClass().getClassLoader());
+            if (hash1 != hash2) {
+                return hash1 > hash2 ? 1 : -1;
+            }
+            hash1 = System.identityHashCode(this);
+            hash2 = System.identityHashCode(other);
+            if (hash1 != hash2) {
+                return hash1 > hash2 ? 1 : -1;
+            }
+            return 0;
         }
     }
 }
