@@ -14,19 +14,19 @@ import utopia.android.patch.util.logcat.Logcat;
 import utopia.android.patch.util.reflect.ClassWrapper;
 import utopia.android.patch.util.reflect.Wrapper;
 
-public final class Rose extends Logcat {
-    private static volatile Rose instance; //rose
+public final class Lucy extends Logcat {
+    private static volatile Lucy instance; //instance
 
     /**
-     * Get the rose.
+     * Get the instance.
      *
-     * @return rose
+     * @return instance
      */
-    private static Rose getInstance() {
+    private static Lucy getInstance() {
         if (instance == null) {
-            synchronized (Rose.class) {
+            synchronized (Lucy.class) {
                 if (instance == null) {
-                    instance = new Rose();
+                    instance = new Lucy();
                 }
             }
         }
@@ -36,8 +36,8 @@ public final class Rose extends Logcat {
     private final Set<String> mIgnored; //ignored packages when hooking
     private final Set<Class<?>> mHooking; //hooking classes
 
-    private Rose() {
-        super("rose");
+    private Lucy() {
+        super("Lucy");
         mIgnored = new HashSet<>();
         mHooking = new HashSet<>();
         getFormatter().add(formatWrapper);
