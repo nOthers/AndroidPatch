@@ -1,0 +1,49 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionCode 1
+        versionName '1.0.0'
+        externalNativeBuild {
+            cmake {
+                cppFlags ''
+                abiFilters 'armeabi'
+            }
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path file('src/main/cpp/CMakeLists.txt')
+        }
+    }
+}
+
+dependencies {
+    compileOnly project(':framework')
+}
+
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+project.group = 'utopia.android.patch'
+project.archivesBaseName = 'killer'
+project.version = '1.0.0'
+
+uploadArchives {
+    repositories {
+        def mavenLocalUrl = mavenLocal().getUrl()
+        mavenDeployer {
+            repository(url: mavenLocalUrl)
+        }
+    }
+    task androidSourcesJar(type: Jar) {
+        classifier = 'sources'
+        from android.sourceSets.main.java.sourceFiles
+    }
+    artifacts {
+        archives androidSourcesJar
+    }
+}

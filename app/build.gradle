@@ -27,6 +27,7 @@ android {
 
 dependencies {
     compileOnly project(':framework')
+    implementation project(':killer')
 }
 
 switch (externalKernel) {

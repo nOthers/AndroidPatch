@@ -1,0 +1,6 @@
+set(NAME killer)
+set(SOURCES dex_killer.cpp)
+set(LIBRARIES log)
+
+add_library(${NAME} SHARED ${SOURCES})
+target_link_libraries(${NAME} ${LIBRARIES})

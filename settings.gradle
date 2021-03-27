@@ -1,1 +1,1 @@
-include ':app', ':android', ':framework', ':xposed'
+include ':app', ':android', ':framework', ':xposed', ':killer'
