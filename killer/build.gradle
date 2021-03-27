@@ -9,8 +9,7 @@ android {
         versionName '1.0.0'
         externalNativeBuild {
             cmake {
-                cppFlags ''
-                abiFilters 'armeabi'
+                abiFilters 'armeabi', 'x86'
             }
         }
     }
