@@ -1,6 +1,6 @@
 #include <jni.h>
 
-extern "C" JNIEXPORT jbyteArray JNICALL Java_utopia_android_patch_killer_KillerAPI_dumpDexFile_1v23(
+extern "C" JNIEXPORT jbyteArray JNICALL Java_utopia_android_patch_killer_Killer_dumpDexFile_1v23(
         JNIEnv *env,
         jclass cls,
         jlong cookie

@@ -9,7 +9,7 @@ import utopia.android.patch.lang.Patch;
 import utopia.android.patch.lang.Patchwork;
 import utopia.android.patch.util.reflect.ClassWrapper;
 
-public class DexKiller {
+public class DexKiller extends Killer {
     public DexKiller() {
         Patchwork.patch(new ClassWrapper(Application.class)
                 .getMethod("attach", Context.class)
@@ -34,8 +34,8 @@ public class DexKiller {
         });
     }
 
-    static void dumpClassLoader_v23(ClassLoader classLoader, String outputPath) {
-        int n = 0;
+    public static void dumpClassLoader_v23(ClassLoader classLoader, String outputPath) {
+        int c = 0;
         Object pathList = new ClassWrapper("dalvik.system.BaseDexClassLoader")
                 .getField("pathList")
                 .get(classLoader);
@@ -50,9 +50,9 @@ public class DexKiller {
                     .getField("mCookie")
                     .get(dexFile);
             for (long cookie : mCookie) {
-                File file = new File(outputPath, "classes" + (n++) + ".dex");
-                byte[] data = KillerAPI.dumpDexFile_v23(cookie);
-                KillerAPI.writeByteArrayToFile(file, data);
+                File file = new File(outputPath, "classes" + (c++) + ".dex");
+                byte[] data = dumpDexFile_v23(cookie);
+                writeByteArrayToFile(file, data);
             }
         }
     }

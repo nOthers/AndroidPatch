@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public final class KillerAPI {
-    private KillerAPI() {
+public class Killer {
+    static {
+        System.loadLibrary("killer");
     }
+
+    public static native byte[] dumpDexFile_v23(long cookie);
 
     public static void writeByteArrayToFile(File file, byte[] data) {
         file.getParentFile().mkdirs();
@@ -24,10 +27,4 @@ public final class KillerAPI {
             }
         }
     }
-
-    static {
-        System.loadLibrary("killer");
-    }
-
-    public static native byte[] dumpDexFile_v23(long cookie);
 }
