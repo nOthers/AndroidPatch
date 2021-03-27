@@ -10,7 +10,6 @@ extern "C" JNIEXPORT jbyteArray JNICALL Java_utopia_android_patch_killer_KillerA
     cookie += sizeof(uint8_t *);
     size_t size_ = *(size_t *) cookie;
     cookie += sizeof(size_t);
-
     jbyte *buf = (jbyte *) begin_;
     jsize length = size_;
     jbyteArray array = env->NewByteArray(length);

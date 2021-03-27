@@ -14,7 +14,6 @@ public final class KillerAPI {
         try {
             output = new FileOutputStream(file);
             output.write(data);
-
         } catch (IOException ignore) {
         } finally {
             if (output != null) {
