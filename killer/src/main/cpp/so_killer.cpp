@@ -12,7 +12,7 @@ void onSharedObjectLoaded(const char *name) {
     JNIEnv *env;
     int gotEnv = vm->GetEnv((void **) &env, JNI_VERSION_1_6);
     if (gotEnv == JNI_EDETACHED) {
-        vm->AttachCurrentThread(&env, nullptr);
+        vm->AttachCurrentThread(&env, NULL);
     }
     if (listener) {
         jclass cls = env->GetObjectClass(listener);
@@ -43,7 +43,7 @@ extern "C" JNIEXPORT void JNICALL Java_utopia_android_patch_killer_Killer_setOnS
     }
     mOnSharedObjectLoadedListener = env->NewGlobalRef(listener);
     if (!origin_do_dlopen_v23) {
-        void *do_dlopen_v23 = DobbySymbolResolver(nullptr, "__dl__Z9do_dlopenPKciPK17android_dlextinfo");
+        void *do_dlopen_v23 = DobbySymbolResolver(NULL, "__dl__Z9do_dlopenPKciPK17android_dlextinfo");
         DobbyHook(do_dlopen_v23, (void *) replace_do_dlopen_v23, (void **) &origin_do_dlopen_v23);
     }
 }
@@ -53,7 +53,7 @@ bool get_shared_object_maps(const char *needle, uint32_t *start, uint32_t *end) 
     uint32_t left, right;
     char line[1024], path[1024];
     FILE *fp = fopen("/proc/self/maps", "r");
-    if (fp != nullptr) {
+    if (fp != NULL) {
         while (fgets(line, sizeof(line), fp)) {
             strcpy(path, "");
             sscanf(line, "%x-%x %*s %*x %*x:%*x %*u %s\n", &left, &right, path);
@@ -86,7 +86,7 @@ extern "C" JNIEXPORT jbyteArray JNICALL Java_utopia_android_patch_killer_Killer_
         jstring filename
 ) {
     uint32_t start, end;
-    const char *filenameUTF = env->GetStringUTFChars(filename, 0);
+    const char *filenameUTF = env->GetStringUTFChars(filename, NULL);
     if (!get_shared_object_maps(filenameUTF, &start, &end)) {
         start = 0;
         end = 0;
