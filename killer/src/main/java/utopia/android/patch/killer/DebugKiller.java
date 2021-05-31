@@ -39,7 +39,7 @@ public class DebugKiller extends Killer {
         }
         String targetPath = "/data/data/" + HiddenAPI.currentPackageName() + "/debug/" + sourceFile.getName();
         writeByteArrayToFile(new File(targetPath), data);
-        executeCommand("chomd 700 " + targetPath, true);
+        executeCommand("chmod 700 " + targetPath, true);
         return targetPath;
     }
 
