@@ -1,6 +1,7 @@
 package utopia.android.patch.killer;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -46,6 +47,24 @@ public class Killer {
     }
 
     public static native byte[] dumpSharedObject(String filename);
+
+    public static byte[] readFileToByteArray(File file) {
+        byte[] data = new byte[(int) file.length()];
+        FileInputStream input = null;
+        try {
+            input = new FileInputStream(file);
+            input.read(data);
+        } catch (IOException ignore) {
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException ignore) {
+                }
+            }
+        }
+        return data;
+    }
 
     public static void writeByteArrayToFile(File file, byte[] data) {
         file.getParentFile().mkdirs();
